@@ -1,0 +1,7 @@
+  a = DECL entero
+  a = DECL entero
+  b = DECL entero
+  c = DECL entero
+  a = = 10
+  t0 = var(a)=10 + var(a)=10
+  b = = expr: +

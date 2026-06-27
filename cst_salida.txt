@@ -1,0 +1,465 @@
+└── declaracion entero: a
+    └── token: ';'
+
+└── declaracion entero: b
+    └── token: ';'
+
+└── asignacion: a =
+    ├── variable: a
+    ├── 10
+    └── token: '='
+
+└── asignacion: b =
+    ├── variable: b
+    ├── 5
+    └── token: '='
+
+└── mostrar <<
+    ├── expr: +
+    │   ├── var(a)=10
+    │   ├── var(b)=5
+    │   └── token: '+'
+    └── token: '<<'
+
+└── mostrar <<
+    ├── expr: -
+    │   ├── agrupacion
+    │   │   ├── token: '('
+    │   │   ├── expr: *
+    │   │   │   ├── var(a)=10
+    │   │   │   ├── var(b)=5
+    │   │   │   └── token: '*'
+    │   │   └── token: ')'
+    │   ├── 3
+    │   └── token: '-'
+    └── token: '<<'
+
+└── mostrar << "a es mayor"
+    └── token: '<<'
+
+└── si ( condicion )
+    ├── condicion: >
+    │   ├── var(a)=10
+    │   └── var(b)=5
+    └── token: '(' ... ')'
+
+└── declaracion entero: i
+    └── token: ';'
+
+└── declaracion entero: suma
+    └── token: ';'
+
+└── asignacion: i =
+    ├── variable: i
+    ├── 0
+    └── token: '='
+
+└── asignacion: suma =
+    ├── variable: suma
+    ├── 0
+    └── token: '='
+
+└── asignacion: suma =
+    ├── variable: suma
+    ├── expr: +
+    │   ├── var(suma)=0
+    │   ├── var(i)=0
+    │   └── token: '+'
+    └── token: '='
+
+└── asignacion: i =
+    ├── variable: i
+    ├── expr: +
+    │   ├── var(i)=0
+    │   ├── 1
+    │   └── token: '+'
+    └── token: '='
+
+└── mientras ( condicion )
+    ├── condicion: <
+    │   ├── var(i)=0
+    │   └── 5
+    └── bloque
+
+└── mostrar << "Resultado:"
+
+└── mostrar << var(suma)
+
+└── declaracion entero: x
+    └── token: ';'
+
+└── retornar
+    └── expr: +
+        ├── var(a)=0
+        ├── var(b)=0
+        └── token: '+'
+
+└── funcion entero: sumar
+    ├── params
+    │   ├── param entero: a
+    │   └── param entero: b
+    └── bloque
+
+└── declaracion entero: resultado
+    └── token: ';'
+
+└── asignacion: resultado =
+    ├── variable: resultado
+    ├── llamada: sumar()
+    │   └── args
+    │       ├── arg
+    │       │   └── 3
+    │       └── 4
+    └── token: '='
+
+└── mostrar << var(resultado)
+
+└── declaracion arreglo entero: numeros[5]
+
+└── asignacion arreglo: numeros[0]
+    ├── 0
+    └── 10
+
+└── asignacion arreglo: numeros[1]
+    ├── 1
+    └── 20
+
+└── mostrar <<
+    ├── acceso arreglo: numeros[0]
+    │   └── 0
+    └── token: '<<'
+
+└── declaracion entero: i
+    └── token: ';'
+
+└── declaracion entero: suma
+    └── token: ';'
+
+└── asignacion: i =
+    ├── variable: i
+    ├── 0
+    └── token: '='
+
+└── asignacion: suma =
+    ├── variable: suma
+    ├── 0
+    └── token: '='
+
+└── asignacion: suma =
+    ├── variable: suma
+    ├── expr: +
+    │   ├── var(suma)=0
+    │   ├── var(i)=0
+    │   └── token: '+'
+    └── token: '='
+
+└── asignacion: i =
+    ├── variable: i
+    ├── expr: +
+    │   ├── var(i)=0
+    │   ├── 1
+    │   └── token: '+'
+    └── token: '='
+
+└── mientras ( condicion )
+    ├── condicion: <
+    │   ├── var(i)=0
+    │   └── 5
+    └── bloque
+
+└── mostrar << "Resultado:"
+
+└── mostrar << var(suma)
+
+└── declaracion arreglo entero: numeros[5]
+
+└── asignacion arreglo: numeros[0]
+    ├── 0
+    └── 10
+
+└── asignacion arreglo: numeros[1]
+    ├── 1
+    └── 20
+
+└── mostrar <<
+    ├── acceso arreglo: numeros[0]
+    │   └── 0
+    └── token: '<<'
+
+└── declaracion entero: i
+    └── token: ';'
+
+└── declaracion entero: suma
+    └── token: ';'
+
+└── asignacion: i =
+    ├── variable: i
+    ├── 0
+    └── token: '='
+
+└── asignacion: suma =
+    ├── variable: suma
+    ├── 0
+    └── token: '='
+
+└── asignacion: suma =
+    ├── variable: suma
+    ├── expr: +
+    │   ├── var(suma)=0
+    │   ├── var(i)=0
+    │   └── token: '+'
+    └── token: '='
+
+└── asignacion: i =
+    ├── variable: i
+    ├── expr: +
+    │   ├── var(i)=0
+    │   ├── 1
+    │   └── token: '+'
+    └── token: '='
+
+└── mientras ( condicion )
+    ├── condicion: <
+    │   ├── var(i)=0
+    │   └── 5
+    └── bloque
+
+└── mostrar << "Resultado:"
+
+└── declaracion entero: i
+    └── token: ';'
+
+└── declaracion entero: suma
+    └── token: ';'
+
+└── asignacion: i =
+    ├── variable: i
+    ├── 0
+    └── token: '='
+
+└── asignacion: suma =
+    ├── variable: suma
+    ├── 0
+    └── token: '='
+
+└── asignacion: suma =
+    ├── variable: suma
+    ├── expr: +
+    │   ├── var(suma)=0
+    │   ├── var(i)=0
+    │   └── token: '+'
+    └── token: '='
+
+└── asignacion: i =
+    ├── variable: i
+    ├── expr: +
+    │   ├── var(i)=0
+    │   ├── 1
+    │   └── token: '+'
+    └── token: '='
+
+└── mientras ( condicion )
+    ├── condicion: <
+    │   ├── var(i)=0
+    │   └── 5
+    └── bloque
+
+└── mostrar << "Resultado:"
+
+└── mostrar << var(suma)
+
+└── declaracion entero: a
+    └── token: ';'
+
+└── declaracion entero: b
+    └── token: ';'
+
+└── asignacion: a =
+    ├── variable: a
+    ├── 5
+    └── token: '='
+
+└── asignacion: b =
+    ├── variable: b
+    ├── 3
+    └── token: '='
+
+└── mostrar <<
+    ├── expr: +
+    │   ├── var(a)=5
+    │   ├── var(b)=3
+    │   └── token: '+'
+    └── token: '<<'
+
+└── retornar
+    └── expr: +
+        ├── var(a)=0
+        ├── var(b)=0
+        └── token: '+'
+
+└── funcion entero: sumar
+    ├── params
+    │   ├── param entero: a
+    │   └── param entero: b
+    └── bloque
+
+└── declaracion entero: resultado
+    └── token: ';'
+
+└── asignacion: resultado =
+    ├── variable: resultado
+    ├── llamada: sumar()
+    │   └── args
+    │       ├── arg
+    │       │   └── 3
+    │       └── 4
+    └── token: '='
+
+└── mostrar << var(resultado)
+
+└── declaracion entero: a
+    └── token: ';'
+
+└── declaracion entero: b
+    └── token: ';'
+
+└── asignacion: a =
+    ├── variable: a
+    ├── 5
+    └── token: '='
+
+└── asignacion: b =
+    ├── variable: b
+    ├── 3
+    └── token: '='
+
+└── mostrar <<
+    ├── expr: +
+    │   ├── var(a)=5
+    │   ├── var(b)=3
+    │   └── token: '+'
+    └── token: '<<'
+
+└── retornar
+    └── expr: +
+        ├── var(a)=0
+        ├── var(b)=0
+        └── token: '+'
+
+└── funcion entero: sumar
+    ├── params
+    │   ├── param entero: a
+    │   └── param entero: b
+    └── bloque
+
+└── declaracion entero: resultado
+    └── token: ';'
+
+└── asignacion: resultado =
+    ├── variable: resultado
+    ├── llamada: sumar()
+    │   └── args
+    │       ├── arg
+    │       │   └── 3
+    │       └── 4
+    └── token: '='
+
+└── mostrar << var(resultado)
+
+└── declaracion entero: a
+    └── token: ';'
+
+└── declaracion entero: a
+    └── token: ';'
+
+└── declaracion entero: b
+    └── token: ';'
+
+└── declaracion entero: c
+    └── token: ';'
+
+└── asignacion: a =
+    ├── variable: a
+    ├── 10
+    └── token: '='
+
+└── asignacion: b =
+    ├── variable: b
+    ├── expr: +
+    │   ├── var(a)=10
+    │   ├── var(a)=10
+    │   └── token: '+'
+    └── token: '='
+
+└── declaracion entero: z
+    └── token: ';'
+
+└── declaracion entero: a
+    └── token: ';'
+
+└── asignacion: z =
+    ├── variable: z
+    ├── 10
+    └── token: '='
+
+└── asignacion: a =
+    ├── variable: a
+    ├── expr: /
+    │   ├── 10
+    │   ├── 0
+    │   └── token: '/'
+    └── token: '='
+
+└── declaracion entero: a
+    └── token: ';'
+
+└── declaracion entero: b
+    └── token: ';'
+
+└── declaracion entero: a
+    └── token: ';'
+
+└── declaracion entero: z
+    └── token: ';'
+
+└── declaracion entero: a
+    └── token: ';'
+
+└── asignacion: z =
+    ├── variable: z
+    ├── 10
+    └── token: '='
+
+└── asignacion: a =
+    ├── variable: a
+    ├── expr: /
+    │   ├── 10
+    │   ├── 0
+    │   └── token: '/'
+    └── token: '='
+
+└── declaracion entero: a
+    └── token: ';'
+
+└── declaracion entero: a
+    └── token: ';'
+
+└── declaracion entero: b
+    └── token: ';'
+
+└── declaracion entero: c
+    └── token: ';'
+
+└── asignacion: a =
+    ├── variable: a
+    ├── 10
+    └── token: '='
+
+└── asignacion: b =
+    ├── variable: b
+    ├── expr: +
+    │   ├── var(a)=10
+    │   ├── var(a)=10
+    │   └── token: '+'
+    └── token: '='
+
