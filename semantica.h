@@ -156,5 +156,10 @@ inline void imprimir_tabla_simbolos() {
             std::cout << "  " << nombreTipo(f.retorno) << " " << f.nombre << "()\n";
     }
 }
-
+bool es_cero(const std::string &etiq) {
+    if (etiq == "0" || etiq == "0.0") return true;
+    SimboloVar *sv = buscar_var(etiq);
+    if (sv && sv->valor == 0.0) return true;
+    return false;
+}
 #endif

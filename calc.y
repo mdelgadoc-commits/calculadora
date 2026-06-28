@@ -44,7 +44,7 @@ void yyerror(const char *s) {
 %token TENTERO TDECIMAL TTEXTO
 %token LE GE EQ NE LT GT AND OR NOT
 
-%type <nodo> expr instruccion cond bloque params_lista args_lista
+%type <nodo> expr instruccion cond params_lista args_lista
 
 %left OR
 %left AND
@@ -65,6 +65,10 @@ instrucciones:
     | instrucciones instruccion
         {
             if ($2) {
+                std::cout << "\n\033[1;33m--- AST ---\033[0m\n";
+                imprimirAST($2);
+                std::cout << "\n\033[1;36m--- CST ---\033[0m\n";
+                imprimirCST($2);
                 std::ofstream fa("ast_salida.txt", std::ios::app);
                 guardarAST($2, fa); fa << "\n";
                 std::ofstream fc("cst_salida.txt", std::ios::app);
@@ -73,6 +77,11 @@ instrucciones:
         }
 ;
 ;
+bloque: 
+    '{' instrucciones '}'  { }
+;
+
+
 instruccion:
     TENTERO ID ';'
         {
@@ -179,7 +188,7 @@ instruccion:
             emitir("IF_FALSE", $3->etiqueta, "", Lfalso);
             emitir("LABEL",    "", "", Lfalso);
             emitir("LABEL",    "", "", Lfin);
-            $$ = new Nodo("si ( condicion )", $3, $5);
+            $$ = new Nodo("si ( condicion )", $3, nullptr);
         }
     | SI '(' cond ')' bloque SINO bloque
         {
@@ -189,7 +198,7 @@ instruccion:
             emitir("GOTO",     "", "", Lfin);
             emitir("LABEL",    "", "", Lfalso);
             emitir("LABEL",    "", "", Lfin);
-            $$ = new Nodo("si-sino", $3, $5);
+            $$ = new Nodo("si-sino", $3, nullptr);
         }
     | MIENTRAS '(' cond ')' bloque
         {
@@ -199,7 +208,7 @@ instruccion:
             emitir("IF_FALSE", $3->etiqueta, "", Lfin);
             emitir("GOTO",     "", "", Linicio);
             emitir("LABEL",    "", "", Lfin);
-            $$ = new Nodo("mientras ( condicion )", $3, $5);
+            $$ = new Nodo("mientras ( condicion )", $3, nullptr);
         }
     | PARA '(' instruccion cond ';' instruccion ')' bloque
         {
@@ -209,9 +218,7 @@ instruccion:
             emitir("IF_FALSE", $4->etiqueta, "", Lfin);
             emitir("GOTO",     "", "", Linicio);
             emitir("LABEL",    "", "", Lfin);
-            Nodo *n = new Nodo("para ( init ; cond ; paso )", $3, $4);
-            n->tercero = $8;
-            $$ = n;
+            $$ = new Nodo("para ( init ; cond ; paso )", $3, $4);
         }
     | FUNCION ID '(' params_lista ')' bloque
         {
@@ -219,14 +226,14 @@ instruccion:
             salir_alcance();
             emitir("LABEL", "", "", std::string($2) + "_inicio");
             emitir("RETURN","0","","");
-            $$ = new Nodo("funcion: " + std::string($2), $4, $6);
+            $$ = new Nodo("funcion: " + std::string($2), $4, nullptr);
         }
     | FUNCION TENTERO ID '(' params_lista ')' bloque
         {
             declarar_funcion($3, TIPO_ENTERO, {});
             salir_alcance();
             emitir("LABEL", "", "", std::string($3) + "_inicio");
-            $$ = new Nodo("funcion entero: " + std::string($3), $5, $7);
+            $$ = new Nodo("funcion entero: " + std::string($3), $5, nullptr);
         }
     | RETORNAR expr ';'
         {
@@ -248,7 +255,6 @@ instruccion:
             emitir("EXPR", $1->etiqueta, "", nuevo_temp());
             $$ = new Nodo("expresion", $1, nullptr, new Nodo("token: ';'"));
         }
-;
 
 params_lista:
     { $$ = new Nodo("params: vacio"); }
@@ -340,14 +346,36 @@ expr:
             $$ = new Nodo("expr: *", $1, $3, new Nodo("token: '*'"));
         }
     | expr '/' expr
-        {
-            if ($3->etiqueta == "0")
-                std::cerr << "\n\033[1;31m[ERROR SEMANTICO] Linea " << num_linea
-                          << ": division por cero detectada.\033[0m\n\n";
-            std::string tmp = nuevo_temp();
-            emitir("/", $1->etiqueta, $3->etiqueta, tmp);
-            $$ = new Nodo("expr: /", $1, $3, new Nodo("token: '/'"));
+    {
+        bool div_cero = false;
+        std::string etiq_der = $3->etiqueta;
+
+        if (etiq_der == "0" || etiq_der == "0.0") {
+            div_cero = true;
         }
+        else if (etiq_der.find("var(") == 0) {
+            size_t pos_igual = etiq_der.find("=");
+            if (pos_igual != std::string::npos) {
+                std::string val_str = etiq_der.substr(pos_igual + 1);
+                if (val_str == "0" || val_str == "0.0" || atof(val_str.c_str()) == 0.0) {
+                    div_cero = true;
+                }
+            }
+        }
+
+        if (div_cero) {
+            std::cerr << "\n\033[1;31m[ERROR SEMANTICO] Linea " << num_linea
+                      << ": division por cero detectada.\033[0m\n"
+                      << "  Causa: el divisor vale 0. Operacion invalida.\n"
+                      << "  Tipo: ERROR SEMANTICO (el codigo es sintacticamente correcto\n"
+                      << "        pero tiene un significado invalido en tiempo de ejecucion)\n\n";
+            total_errores_logicos++;
+        }
+
+        std::string tmp = nuevo_temp();
+        emitir("/", $1->etiqueta, $3->etiqueta, tmp);
+        $$ = new Nodo("expr: /", $1, $3, new Nodo("token: '/'"));
+    }
     | expr '%' expr
         {
             std::string tmp = nuevo_temp();
@@ -373,16 +401,12 @@ expr:
 int main() {
     std::cout << "=== COMPILADOR v2 — Con bucles, funciones y semantica ===\n";
     std::cout << "Escribe tu codigo y presiona Ctrl+D al finalizar:\n\n";
-
-    std::vector<Nodo*> instrucciones_guardadas;
-
     yyparse();
-
     imprimir_tabla_simbolos();
     imprimir_intermedio();
     guardar_intermedio();
-
     std::cout << "\033[1;33m  RESUMEN DE ERRORES\033[0m\n";
+    std::cout << "\033[1;33m----------------------------\033[0m\n";
     if (!total_errores_lexicos && !total_errores_sintacticos && !total_errores_logicos)
         std::cout << "\033[1;32m  Sin errores. Codigo valido.\033[0m\n\n";
     else {
@@ -394,45 +418,5 @@ int main() {
             std::cout << "\033[1;31m  Errores logicos:     " << total_errores_logicos     << "\033[0m\n";
         std::cout << "\n";
     }
-
-    std::cout << "\n\033[1;33m¿Deseas generar un arbol sintactico? (si/no): \033[0m";
-    std::string respuesta;
-    std::cin >> respuesta;
-
-    if (respuesta == "si" || respuesta == "SI" || respuesta == "s") {
-        std::cout << "\n\033[1;33m¿Cual arbol deseas ver?\033[0m\n";
-        std::cout << "  1. AST (Arbol Sintactico Abstracto)\n";
-        std::cout << "  2. CST (Arbol Sintactico Concreto)\n";
-        std::cout << "  3. Ambos\n";
-        std::cout << "Elige (1/2/3): ";
-        int opcion;
-        std::cin >> opcion;
-
-        std::ifstream fAST("ast_salida.txt");
-        std::ifstream fCST("cst_salida.txt");
-
-        if (opcion == 1 || opcion == 3) {
-            std::cout << "\033[1;33m  AST (Arbol Sintactico Abstracto)\033[0m\n";
-            if (fAST.is_open())
-                std::cout << fAST.rdbuf();
-            else
-                std::cout << "  No se encontro ast_salida.txt\n";
-        }
-
-        if (opcion == 2 || opcion == 3) {
-            std::cout << "\033[1;36m  CST (Arbol Sintactico Concreto)\033[0m\n";
-            if (fCST.is_open())
-                std::cout << fCST.rdbuf();
-            else
-                std::cout << "  No se encontro cst_salida.txt\n";
-        }
-
-        if (opcion < 1 || opcion > 3)
-            std::cout << "\n  Opcion invalida. Saliendo.\n";
-
-    } else {
-        std::cout << "\n  Ok. Programa finalizado sin generar arboles.\n\n";
-    }
-
     return 0;
 }

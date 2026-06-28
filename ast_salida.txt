@@ -463,3 +463,208 @@
     │   └── token: '+'
     └── token: '='
 
+└── declaracion entero: a
+    └── token: ';'
+
+└── declaracion entero: b
+    └── token: ';'
+
+└── asignacion: a =
+    ├── variable: a
+    ├── 5
+    └── token: '='
+
+└── asignacion: b =
+    ├── variable: b
+    ├── 0
+    └── token: '='
+
+└── mostrar <<
+    ├── expr: /
+    │   ├── var(a)=5
+    │   ├── var(b)=0
+    │   └── token: '/'
+    └── token: '<<'
+
+└── declaracion entero: a
+    └── token: ';'
+
+└── declaracion entero: b
+    └── token: ';'
+
+└── asignacion: a =
+    ├── variable: a
+    ├── 5
+    └── token: '='
+
+└── asignacion: b =
+    ├── variable: b
+    ├── 0
+    └── token: '='
+
+└── mostrar <<
+    ├── expr: /
+    │   ├── var(a)=5
+    │   ├── var(b)=0
+    │   └── token: '/'
+    └── token: '<<'
+
+└── declaracion entero: a
+    └── token: ';'
+
+└── declaracion entero: b
+    └── token: ';'
+
+└── asignacion: a =
+    ├── variable: a
+    ├── 5
+    └── token: '='
+
+└── asignacion: b =
+    ├── variable: b
+    ├── 0
+    └── token: '='
+
+└── declaracion entero: a
+    └── token: ';'
+
+└── declaracion entero: b
+    └── token: ';'
+
+└── asignacion: a =
+    ├── variable: a
+    ├── 5
+    └── token: '='
+
+└── asignacion: b =
+    ├── variable: b
+    ├── 0
+    └── token: '='
+
+└── mostrar <<
+    ├── expr: /
+    │   ├── var(a)=5
+    │   ├── var(b)=0
+    │   └── token: '/'
+    └── token: '<<'
+
+└── declaracion entero: i
+    └── token: ';'
+
+└── asignacion: i =
+    ├── variable: i
+    ├── 0
+    └── token: '='
+
+└── mostrar << var(i)
+
+└── asignacion: i =
+    ├── variable: i
+    ├── expr: +
+    │   ├── var(i)=0
+    │   ├── 1
+    │   └── token: '+'
+    └── token: '='
+
+└── mientras ( condicion )
+    └── condicion: <
+        ├── var(i)=0
+        └── 3
+
+└── declaracion entero: i
+    └── token: ';'
+
+└── asignacion: i =
+    ├── variable: i
+    ├── 0
+    └── token: '='
+
+└── mostrar << var(i)
+
+└── asignacion: i =
+    ├── variable: i
+    ├── expr: +
+    │   ├── var(i)=0
+    │   ├── 1
+    │   └── token: '+'
+    └── token: '='
+
+└── mientras ( condicion )
+    └── condicion: <
+        ├── var(i)=0
+        └── 3
+
+└── declaracion entero: i
+    └── token: ';'
+
+└── asignacion: i =
+    ├── variable: i
+    ├── 0
+    └── token: '='
+
+└── mostrar << var(i)
+
+└── asignacion: i =
+    ├── variable: i
+    ├── expr: +
+    │   ├── var(i)=0
+    │   ├── 1
+    │   └── token: '+'
+    └── token: '='
+
+└── mientras ( condicion )
+    └── condicion: <
+        ├── var(i)=0
+        └── 3
+
+└── declaracion entero: a
+    └── token: ';'
+
+└── asignacion: a =
+    ├── variable: a
+    ├── 5
+    └── token: '='
+
+└── mostrar << var(a)
+
+└── declaracion entero: i
+    └── token: ';'
+
+└── declaracion entero: suma
+    └── token: ';'
+
+└── asignacion: i =
+    ├── variable: i
+    ├── 0
+    └── token: '='
+
+└── asignacion: suma =
+    ├── variable: suma
+    ├── 0
+    └── token: '='
+
+└── asignacion: suma =
+    ├── variable: suma
+    ├── expr: +
+    │   ├── var(suma)=0
+    │   ├── var(i)=0
+    │   └── token: '+'
+    └── token: '='
+
+└── asignacion: i =
+    ├── variable: i
+    ├── expr: +
+    │   ├── var(i)=0
+    │   ├── 1
+    │   └── token: '+'
+    └── token: '='
+
+└── mientras ( condicion )
+    └── condicion: <
+        ├── var(i)=0
+        └── 5
+
+└── mostrar << "Resultado:"
+
+└── mostrar << var(suma)
+

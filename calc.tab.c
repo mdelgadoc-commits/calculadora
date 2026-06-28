@@ -571,12 +571,12 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    59,    59,    59,    64,    65,    81,    85,    92,    99,
-     106,   114,   123,   132,   141,   148,   154,   164,   170,   183,
-     192,   202,   212,   224,   232,   239,   244,   253,   262,   263,
-     269,   278,   279,   284,   292,   293,   294,   295,   296,   297,
-     298,   299,   300,   304,   309,   310,   311,   312,   318,   323,
-     332,   338,   344,   350,   359,   365,   371
+       0,    59,    59,    59,    64,    65,    81,    86,    93,   100,
+     107,   115,   124,   133,   142,   149,   155,   165,   171,   184,
+     193,   203,   213,   223,   231,   238,   243,   252,   260,   261,
+     267,   276,   277,   282,   290,   291,   292,   293,   294,   295,
+     296,   297,   298,   302,   307,   308,   309,   310,   316,   321,
+     330,   336,   342,   348,   379,   385,   391
 };
 #endif
 
@@ -1273,12 +1273,12 @@ yyreduce:
 
   case 6: /* bloque: '{' instrucciones '}'  */
 #line 81 "calc.y"
-                            { (yyval.nodo) = new Nodo("bloque"); }
+                           { }
 #line 1278 "calc.tab.c"
     break;
 
   case 7: /* instruccion: TENTERO ID ';'  */
-#line 86 "calc.y"
+#line 87 "calc.y"
         {
             declarar_var((yyvsp[-1].str), TIPO_ENTERO);
             emitir("DECL", "entero", "", (yyvsp[-1].str));
@@ -1289,7 +1289,7 @@ yyreduce:
     break;
 
   case 8: /* instruccion: TDECIMAL ID ';'  */
-#line 93 "calc.y"
+#line 94 "calc.y"
         {
             declarar_var((yyvsp[-1].str), TIPO_DECIMAL);
             emitir("DECL", "decimal", "", (yyvsp[-1].str));
@@ -1300,7 +1300,7 @@ yyreduce:
     break;
 
   case 9: /* instruccion: TTEXTO ID ';'  */
-#line 100 "calc.y"
+#line 101 "calc.y"
         {
             declarar_var((yyvsp[-1].str), TIPO_TEXTO);
             emitir("DECL", "texto", "", (yyvsp[-1].str));
@@ -1311,7 +1311,7 @@ yyreduce:
     break;
 
   case 10: /* instruccion: TENTERO ID '[' NUM ']' ';'  */
-#line 107 "calc.y"
+#line 108 "calc.y"
         {
             declarar_var((yyvsp[-4].str), TIPO_ENTERO, true, (int)(yyvsp[-2].num));
             char buf[64]; snprintf(buf,63,"%d",(int)(yyvsp[-2].num));
@@ -1323,7 +1323,7 @@ yyreduce:
     break;
 
   case 11: /* instruccion: TENTERO ID '=' expr ';'  */
-#line 115 "calc.y"
+#line 116 "calc.y"
         {
             declarar_var((yyvsp[-3].str), TIPO_ENTERO);
             asignar_var((yyvsp[-3].str), atof((yyvsp[-1].nodo)->etiqueta.c_str()));
@@ -1336,7 +1336,7 @@ yyreduce:
     break;
 
   case 12: /* instruccion: TDECIMAL ID '=' expr ';'  */
-#line 124 "calc.y"
+#line 125 "calc.y"
         {
             declarar_var((yyvsp[-3].str), TIPO_DECIMAL);
             asignar_var((yyvsp[-3].str), atof((yyvsp[-1].nodo)->etiqueta.c_str()));
@@ -1349,7 +1349,7 @@ yyreduce:
     break;
 
   case 13: /* instruccion: ID '=' expr ';'  */
-#line 133 "calc.y"
+#line 134 "calc.y"
         {
             asignar_var((yyvsp[-3].str), atof((yyvsp[-1].nodo)->etiqueta.c_str()));
             printf("  %s = %.6g\n", (yyvsp[-3].str), atof((yyvsp[-1].nodo)->etiqueta.c_str()));
@@ -1362,7 +1362,7 @@ yyreduce:
     break;
 
   case 14: /* instruccion: ID '[' expr ']' '=' expr ';'  */
-#line 142 "calc.y"
+#line 143 "calc.y"
         {
             std::string etiq = std::string((yyvsp[-6].str)) + "[" + (yyvsp[-4].nodo)->etiqueta + "]";
             emitir("ARRAY_SET", (yyvsp[-1].nodo)->etiqueta, (yyvsp[-4].nodo)->etiqueta, (yyvsp[-6].str));
@@ -1373,7 +1373,7 @@ yyreduce:
     break;
 
   case 15: /* instruccion: MOSTRAR SALIDA expr ';'  */
-#line 149 "calc.y"
+#line 150 "calc.y"
         {
             printf("%.6g\n", atof((yyvsp[-1].nodo)->etiqueta.c_str()));
             emitir("PRINT", (yyvsp[-1].nodo)->etiqueta, "", "");
@@ -1383,7 +1383,7 @@ yyreduce:
     break;
 
   case 16: /* instruccion: MOSTRAR SALIDA TEXTO_VAL ';'  */
-#line 155 "calc.y"
+#line 156 "calc.y"
         {
             char *s = (yyvsp[-1].str); if (s[0]=='"') s++;
             char buf[256]; strncpy(buf,s,255);
@@ -1397,7 +1397,7 @@ yyreduce:
     break;
 
   case 17: /* instruccion: MOSTRAR SALIDA ID ';'  */
-#line 165 "calc.y"
+#line 166 "calc.y"
         {
             printf("%.6g\n", obtener_var((yyvsp[-1].str)));
             emitir("PRINT", (yyvsp[-1].str), "", "");
@@ -1407,7 +1407,7 @@ yyreduce:
     break;
 
   case 18: /* instruccion: DATOINGRESADO ENTRADA ID ';'  */
-#line 171 "calc.y"
+#line 172 "calc.y"
         {
             if (!existe_var((yyvsp[-1].str)))
                 std::cerr << "\n\033[1;31m[ERROR SEMANTICO] Linea " << num_linea
@@ -1424,20 +1424,20 @@ yyreduce:
     break;
 
   case 19: /* instruccion: SI '(' cond ')' bloque  */
-#line 184 "calc.y"
+#line 185 "calc.y"
         {
             std::string Lfalso = nuevo_label();
             std::string Lfin   = nuevo_label();
             emitir("IF_FALSE", (yyvsp[-2].nodo)->etiqueta, "", Lfalso);
             emitir("LABEL",    "", "", Lfalso);
             emitir("LABEL",    "", "", Lfin);
-            (yyval.nodo) = new Nodo("si ( condicion )", (yyvsp[-2].nodo), (yyvsp[0].nodo));
+            (yyval.nodo) = new Nodo("si ( condicion )", (yyvsp[-2].nodo), nullptr);
         }
 #line 1437 "calc.tab.c"
     break;
 
   case 20: /* instruccion: SI '(' cond ')' bloque SINO bloque  */
-#line 193 "calc.y"
+#line 194 "calc.y"
         {
             std::string Lfalso = nuevo_label();
             std::string Lfin   = nuevo_label();
@@ -1445,13 +1445,13 @@ yyreduce:
             emitir("GOTO",     "", "", Lfin);
             emitir("LABEL",    "", "", Lfalso);
             emitir("LABEL",    "", "", Lfin);
-            (yyval.nodo) = new Nodo("si-sino", (yyvsp[-4].nodo), (yyvsp[-2].nodo));
+            (yyval.nodo) = new Nodo("si-sino", (yyvsp[-4].nodo), nullptr);
         }
 #line 1451 "calc.tab.c"
     break;
 
   case 21: /* instruccion: MIENTRAS '(' cond ')' bloque  */
-#line 203 "calc.y"
+#line 204 "calc.y"
         {
             std::string Linicio = nuevo_label();
             std::string Lfin    = nuevo_label();
@@ -1459,13 +1459,13 @@ yyreduce:
             emitir("IF_FALSE", (yyvsp[-2].nodo)->etiqueta, "", Lfin);
             emitir("GOTO",     "", "", Linicio);
             emitir("LABEL",    "", "", Lfin);
-            (yyval.nodo) = new Nodo("mientras ( condicion )", (yyvsp[-2].nodo), (yyvsp[0].nodo));
+            (yyval.nodo) = new Nodo("mientras ( condicion )", (yyvsp[-2].nodo), nullptr);
         }
 #line 1465 "calc.tab.c"
     break;
 
   case 22: /* instruccion: PARA '(' instruccion cond ';' instruccion ')' bloque  */
-#line 213 "calc.y"
+#line 214 "calc.y"
         {
             std::string Linicio = nuevo_label();
             std::string Lfin    = nuevo_label();
@@ -1473,47 +1473,45 @@ yyreduce:
             emitir("IF_FALSE", (yyvsp[-4].nodo)->etiqueta, "", Lfin);
             emitir("GOTO",     "", "", Linicio);
             emitir("LABEL",    "", "", Lfin);
-            Nodo *n = new Nodo("para ( init ; cond ; paso )", (yyvsp[-5].nodo), (yyvsp[-4].nodo));
-            n->tercero = (yyvsp[0].nodo);
-            (yyval.nodo) = n;
+            (yyval.nodo) = new Nodo("para ( init ; cond ; paso )", (yyvsp[-5].nodo), (yyvsp[-4].nodo));
         }
-#line 1481 "calc.tab.c"
+#line 1479 "calc.tab.c"
     break;
 
   case 23: /* instruccion: FUNCION ID '(' params_lista ')' bloque  */
-#line 225 "calc.y"
+#line 224 "calc.y"
         {
             declarar_funcion((yyvsp[-4].str), TIPO_VOID, {});
             salir_alcance();
             emitir("LABEL", "", "", std::string((yyvsp[-4].str)) + "_inicio");
             emitir("RETURN","0","","");
-            (yyval.nodo) = new Nodo("funcion: " + std::string((yyvsp[-4].str)), (yyvsp[-2].nodo), (yyvsp[0].nodo));
+            (yyval.nodo) = new Nodo("funcion: " + std::string((yyvsp[-4].str)), (yyvsp[-2].nodo), nullptr);
         }
-#line 1493 "calc.tab.c"
+#line 1491 "calc.tab.c"
     break;
 
   case 24: /* instruccion: FUNCION TENTERO ID '(' params_lista ')' bloque  */
-#line 233 "calc.y"
+#line 232 "calc.y"
         {
             declarar_funcion((yyvsp[-4].str), TIPO_ENTERO, {});
             salir_alcance();
             emitir("LABEL", "", "", std::string((yyvsp[-4].str)) + "_inicio");
-            (yyval.nodo) = new Nodo("funcion entero: " + std::string((yyvsp[-4].str)), (yyvsp[-2].nodo), (yyvsp[0].nodo));
+            (yyval.nodo) = new Nodo("funcion entero: " + std::string((yyvsp[-4].str)), (yyvsp[-2].nodo), nullptr);
         }
-#line 1504 "calc.tab.c"
+#line 1502 "calc.tab.c"
     break;
 
   case 25: /* instruccion: RETORNAR expr ';'  */
-#line 240 "calc.y"
+#line 239 "calc.y"
         {
             emitir("RETURN", (yyvsp[-1].nodo)->etiqueta, "", "");
             (yyval.nodo) = new Nodo("retornar", (yyvsp[-1].nodo));
         }
-#line 1513 "calc.tab.c"
+#line 1511 "calc.tab.c"
     break;
 
   case 26: /* instruccion: ID '(' args_lista ')' ';'  */
-#line 245 "calc.y"
+#line 244 "calc.y"
         {
             if (!existe_funcion((yyvsp[-4].str)))
                 std::cerr << "\n\033[1;31m[ERROR SEMANTICO] Linea " << num_linea
@@ -1522,171 +1520,171 @@ yyreduce:
             emitir("CALL", (yyvsp[-4].str), "0", tmp);
             (yyval.nodo) = new Nodo("llamada funcion: " + std::string((yyvsp[-4].str)), (yyvsp[-2].nodo));
         }
-#line 1526 "calc.tab.c"
+#line 1524 "calc.tab.c"
     break;
 
   case 27: /* instruccion: expr ';'  */
-#line 254 "calc.y"
+#line 253 "calc.y"
         {
             printf("= %s\n", (yyvsp[-1].nodo)->etiqueta.c_str());
             emitir("EXPR", (yyvsp[-1].nodo)->etiqueta, "", nuevo_temp());
             (yyval.nodo) = new Nodo("expresion", (yyvsp[-1].nodo), nullptr, new Nodo("token: ';'"));
         }
-#line 1536 "calc.tab.c"
+#line 1534 "calc.tab.c"
     break;
 
   case 28: /* params_lista: %empty  */
-#line 262 "calc.y"
+#line 260 "calc.y"
     { (yyval.nodo) = new Nodo("params: vacio"); }
-#line 1542 "calc.tab.c"
+#line 1540 "calc.tab.c"
     break;
 
   case 29: /* params_lista: TENTERO ID  */
-#line 264 "calc.y"
+#line 262 "calc.y"
         {
             entrar_alcance("funcion");
             declarar_var((yyvsp[0].str), TIPO_ENTERO);
             (yyval.nodo) = new Nodo("param entero: " + std::string((yyvsp[0].str)));
         }
-#line 1552 "calc.tab.c"
+#line 1550 "calc.tab.c"
     break;
 
   case 30: /* params_lista: params_lista ',' TENTERO ID  */
-#line 270 "calc.y"
+#line 268 "calc.y"
         {
             declarar_var((yyvsp[0].str), TIPO_ENTERO);
             (yyval.nodo) = new Nodo("params", (yyvsp[-3].nodo),
                           new Nodo("param entero: " + std::string((yyvsp[0].str))));
         }
-#line 1562 "calc.tab.c"
+#line 1560 "calc.tab.c"
     break;
 
   case 31: /* args_lista: %empty  */
-#line 278 "calc.y"
+#line 276 "calc.y"
     { (yyval.nodo) = new Nodo("args: vacio"); }
-#line 1568 "calc.tab.c"
+#line 1566 "calc.tab.c"
     break;
 
   case 32: /* args_lista: expr  */
-#line 280 "calc.y"
+#line 278 "calc.y"
         {
             emitir("PARAM", (yyvsp[0].nodo)->etiqueta, "", "");
             (yyval.nodo) = new Nodo("arg", (yyvsp[0].nodo));
         }
-#line 1577 "calc.tab.c"
+#line 1575 "calc.tab.c"
     break;
 
   case 33: /* args_lista: args_lista ',' expr  */
-#line 285 "calc.y"
+#line 283 "calc.y"
         {
             emitir("PARAM", (yyvsp[0].nodo)->etiqueta, "", "");
             (yyval.nodo) = new Nodo("args", (yyvsp[-2].nodo), (yyvsp[0].nodo));
         }
-#line 1586 "calc.tab.c"
+#line 1584 "calc.tab.c"
     break;
 
   case 34: /* cond: expr LE expr  */
-#line 292 "calc.y"
+#line 290 "calc.y"
                   { (yyval.nodo) = new Nodo("condicion: <=", (yyvsp[-2].nodo), (yyvsp[0].nodo)); }
-#line 1592 "calc.tab.c"
+#line 1590 "calc.tab.c"
     break;
 
   case 35: /* cond: expr GE expr  */
-#line 293 "calc.y"
+#line 291 "calc.y"
                     { (yyval.nodo) = new Nodo("condicion: >=", (yyvsp[-2].nodo), (yyvsp[0].nodo)); }
-#line 1598 "calc.tab.c"
+#line 1596 "calc.tab.c"
     break;
 
   case 36: /* cond: expr EQ expr  */
-#line 294 "calc.y"
+#line 292 "calc.y"
                     { (yyval.nodo) = new Nodo("condicion: ==", (yyvsp[-2].nodo), (yyvsp[0].nodo)); }
-#line 1604 "calc.tab.c"
+#line 1602 "calc.tab.c"
     break;
 
   case 37: /* cond: expr NE expr  */
-#line 295 "calc.y"
+#line 293 "calc.y"
                     { (yyval.nodo) = new Nodo("condicion: !=", (yyvsp[-2].nodo), (yyvsp[0].nodo)); }
-#line 1610 "calc.tab.c"
+#line 1608 "calc.tab.c"
     break;
 
   case 38: /* cond: expr LT expr  */
-#line 296 "calc.y"
+#line 294 "calc.y"
                     { (yyval.nodo) = new Nodo("condicion: <",  (yyvsp[-2].nodo), (yyvsp[0].nodo)); }
-#line 1616 "calc.tab.c"
+#line 1614 "calc.tab.c"
     break;
 
   case 39: /* cond: expr GT expr  */
-#line 297 "calc.y"
+#line 295 "calc.y"
                     { (yyval.nodo) = new Nodo("condicion: >",  (yyvsp[-2].nodo), (yyvsp[0].nodo)); }
-#line 1622 "calc.tab.c"
+#line 1620 "calc.tab.c"
     break;
 
   case 40: /* cond: cond AND cond  */
-#line 298 "calc.y"
+#line 296 "calc.y"
                     { (yyval.nodo) = new Nodo("condicion: &&", (yyvsp[-2].nodo), (yyvsp[0].nodo)); }
-#line 1628 "calc.tab.c"
+#line 1626 "calc.tab.c"
     break;
 
   case 41: /* cond: cond OR cond  */
-#line 299 "calc.y"
+#line 297 "calc.y"
                     { (yyval.nodo) = new Nodo("condicion: ||", (yyvsp[-2].nodo), (yyvsp[0].nodo)); }
-#line 1634 "calc.tab.c"
+#line 1632 "calc.tab.c"
     break;
 
   case 42: /* cond: NOT cond  */
-#line 300 "calc.y"
+#line 298 "calc.y"
                     { (yyval.nodo) = new Nodo("condicion: !",  (yyvsp[0].nodo), nullptr); }
-#line 1640 "calc.tab.c"
+#line 1638 "calc.tab.c"
     break;
 
   case 43: /* expr: NUM  */
-#line 305 "calc.y"
+#line 303 "calc.y"
         {
             char buf[64]; snprintf(buf,63,"%g",(yyvsp[0].num));
             (yyval.nodo) = new Nodo(std::string(buf));
         }
-#line 1649 "calc.tab.c"
+#line 1647 "calc.tab.c"
     break;
 
   case 44: /* expr: VERDADERO  */
-#line 309 "calc.y"
+#line 307 "calc.y"
                   { (yyval.nodo) = new Nodo("verdadero"); }
-#line 1655 "calc.tab.c"
+#line 1653 "calc.tab.c"
     break;
 
   case 45: /* expr: FALSO  */
-#line 310 "calc.y"
+#line 308 "calc.y"
                   { (yyval.nodo) = new Nodo("falso"); }
-#line 1661 "calc.tab.c"
+#line 1659 "calc.tab.c"
     break;
 
   case 46: /* expr: TEXTO_VAL  */
-#line 311 "calc.y"
+#line 309 "calc.y"
                   { (yyval.nodo) = new Nodo(std::string((yyvsp[0].str))); }
-#line 1667 "calc.tab.c"
+#line 1665 "calc.tab.c"
     break;
 
   case 47: /* expr: ID  */
-#line 313 "calc.y"
+#line 311 "calc.y"
         {
             double v = obtener_var((yyvsp[0].str));
             char buf[64]; snprintf(buf,63,"var(%s)=%g",(yyvsp[0].str),v);
             (yyval.nodo) = new Nodo(std::string(buf));
         }
-#line 1677 "calc.tab.c"
+#line 1675 "calc.tab.c"
     break;
 
   case 48: /* expr: ID '[' expr ']'  */
-#line 319 "calc.y"
+#line 317 "calc.y"
         {
             std::string etiq = std::string((yyvsp[-3].str)) + "[" + (yyvsp[-1].nodo)->etiqueta + "]";
             (yyval.nodo) = new Nodo("acceso arreglo: " + etiq, (yyvsp[-1].nodo));
         }
-#line 1686 "calc.tab.c"
+#line 1684 "calc.tab.c"
     break;
 
   case 49: /* expr: ID '(' args_lista ')'  */
-#line 324 "calc.y"
+#line 322 "calc.y"
         {
             if (!existe_funcion((yyvsp[-3].str)))
                 std::cerr << "\n\033[1;31m[ERROR SEMANTICO] Linea " << num_linea
@@ -1695,84 +1693,106 @@ yyreduce:
             emitir("CALL", (yyvsp[-3].str), "0", tmp);
             (yyval.nodo) = new Nodo("llamada: " + std::string((yyvsp[-3].str)) + "()", (yyvsp[-1].nodo));
         }
-#line 1699 "calc.tab.c"
+#line 1697 "calc.tab.c"
     break;
 
   case 50: /* expr: expr '+' expr  */
-#line 333 "calc.y"
+#line 331 "calc.y"
         {
             std::string tmp = nuevo_temp();
             emitir("+", (yyvsp[-2].nodo)->etiqueta, (yyvsp[0].nodo)->etiqueta, tmp);
             (yyval.nodo) = new Nodo("expr: +", (yyvsp[-2].nodo), (yyvsp[0].nodo), new Nodo("token: '+'"));
         }
-#line 1709 "calc.tab.c"
+#line 1707 "calc.tab.c"
     break;
 
   case 51: /* expr: expr '-' expr  */
-#line 339 "calc.y"
+#line 337 "calc.y"
         {
             std::string tmp = nuevo_temp();
             emitir("-", (yyvsp[-2].nodo)->etiqueta, (yyvsp[0].nodo)->etiqueta, tmp);
             (yyval.nodo) = new Nodo("expr: -", (yyvsp[-2].nodo), (yyvsp[0].nodo), new Nodo("token: '-'"));
         }
-#line 1719 "calc.tab.c"
+#line 1717 "calc.tab.c"
     break;
 
   case 52: /* expr: expr '*' expr  */
-#line 345 "calc.y"
+#line 343 "calc.y"
         {
             std::string tmp = nuevo_temp();
             emitir("*", (yyvsp[-2].nodo)->etiqueta, (yyvsp[0].nodo)->etiqueta, tmp);
             (yyval.nodo) = new Nodo("expr: *", (yyvsp[-2].nodo), (yyvsp[0].nodo), new Nodo("token: '*'"));
         }
-#line 1729 "calc.tab.c"
+#line 1727 "calc.tab.c"
     break;
 
   case 53: /* expr: expr '/' expr  */
-#line 351 "calc.y"
-        {
-            if ((yyvsp[0].nodo)->etiqueta == "0")
-                std::cerr << "\n\033[1;31m[ERROR SEMANTICO] Linea " << num_linea
-                          << ": division por cero detectada.\033[0m\n\n";
-            std::string tmp = nuevo_temp();
-            emitir("/", (yyvsp[-2].nodo)->etiqueta, (yyvsp[0].nodo)->etiqueta, tmp);
-            (yyval.nodo) = new Nodo("expr: /", (yyvsp[-2].nodo), (yyvsp[0].nodo), new Nodo("token: '/'"));
+#line 349 "calc.y"
+    {
+        bool div_cero = false;
+        std::string etiq_der = (yyvsp[0].nodo)->etiqueta;
+
+        if (etiq_der == "0" || etiq_der == "0.0") {
+            div_cero = true;
         }
-#line 1742 "calc.tab.c"
+        else if (etiq_der.find("var(") == 0) {
+            size_t pos_igual = etiq_der.find("=");
+            if (pos_igual != std::string::npos) {
+                std::string val_str = etiq_der.substr(pos_igual + 1);
+                if (val_str == "0" || val_str == "0.0" || atof(val_str.c_str()) == 0.0) {
+                    div_cero = true;
+                }
+            }
+        }
+
+        if (div_cero) {
+            std::cerr << "\n\033[1;31m[ERROR SEMANTICO] Linea " << num_linea
+                      << ": division por cero detectada.\033[0m\n"
+                      << "  Causa: el divisor vale 0. Operacion invalida.\n"
+                      << "  Tipo: ERROR SEMANTICO (el codigo es sintacticamente correcto\n"
+                      << "        pero tiene un significado invalido en tiempo de ejecucion)\n\n";
+            total_errores_logicos++;
+        }
+
+        std::string tmp = nuevo_temp();
+        emitir("/", (yyvsp[-2].nodo)->etiqueta, (yyvsp[0].nodo)->etiqueta, tmp);
+        (yyval.nodo) = new Nodo("expr: /", (yyvsp[-2].nodo), (yyvsp[0].nodo), new Nodo("token: '/'"));
+    }
+#line 1762 "calc.tab.c"
     break;
 
   case 54: /* expr: expr '%' expr  */
-#line 360 "calc.y"
+#line 380 "calc.y"
         {
             std::string tmp = nuevo_temp();
             emitir("%", (yyvsp[-2].nodo)->etiqueta, (yyvsp[0].nodo)->etiqueta, tmp);
             (yyval.nodo) = new Nodo("expr: %", (yyvsp[-2].nodo), (yyvsp[0].nodo), new Nodo("token: '%'"));
         }
-#line 1752 "calc.tab.c"
+#line 1772 "calc.tab.c"
     break;
 
   case 55: /* expr: '-' expr  */
-#line 366 "calc.y"
+#line 386 "calc.y"
         {
             std::string tmp = nuevo_temp();
             emitir("NEG", (yyvsp[0].nodo)->etiqueta, "", tmp);
             (yyval.nodo) = new Nodo("negativo", (yyvsp[0].nodo));
         }
-#line 1762 "calc.tab.c"
+#line 1782 "calc.tab.c"
     break;
 
   case 56: /* expr: '(' expr ')'  */
-#line 372 "calc.y"
+#line 392 "calc.y"
         {
             (yyval.nodo) = new Nodo("agrupacion",
                           new Nodo("token: '('"), (yyvsp[-1].nodo),
                           new Nodo("token: ')'"));
         }
-#line 1772 "calc.tab.c"
+#line 1792 "calc.tab.c"
     break;
 
 
-#line 1776 "calc.tab.c"
+#line 1796 "calc.tab.c"
 
       default: break;
     }
@@ -1965,7 +1985,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 379 "calc.y"
+#line 399 "calc.y"
 
 
 int main() {
@@ -1975,9 +1995,8 @@ int main() {
     imprimir_tabla_simbolos();
     imprimir_intermedio();
     guardar_intermedio();
-    std::cout << "\n\033[1;33m════════════════════════════\033[0m\n";
     std::cout << "\033[1;33m  RESUMEN DE ERRORES\033[0m\n";
-    std::cout << "\033[1;33m════════════════════════════\033[0m\n";
+    std::cout << "\033[1;33m----------------------------\033[0m\n";
     if (!total_errores_lexicos && !total_errores_sintacticos && !total_errores_logicos)
         std::cout << "\033[1;32m  Sin errores. Codigo valido.\033[0m\n\n";
     else {

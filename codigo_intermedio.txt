@@ -1,7 +1,14 @@
-  a = DECL entero
-  a = DECL entero
-  b = DECL entero
-  c = DECL entero
-  a = = 10
-  t0 = var(a)=10 + var(a)=10
-  b = = expr: +
+  i = DECL entero
+  suma = DECL entero
+  i = = 0
+  suma = = 0
+  t0 = var(suma)=0 + var(i)=0
+  suma = = expr: +
+  t1 = var(i)=0 + 1
+  i = = expr: +
+L0:
+  IF_FALSE condicion: < GOTO L1
+  GOTO L0
+L1:
+  PRINT "Resultado:"
+  PRINT suma
