@@ -1,0 +1,15 @@
+# Archivos generados por compilacion
+lex.yy.c
+calc.tab.c
+calc.tab.h
+calc
+
+# Archivos de salida generados en ejecucion
+ast_salida.txt
+cst_salida.txt
+codigo_intermedio.txt
+
+# Archivos temporales
+*.o
+*.zip
+*.zip
